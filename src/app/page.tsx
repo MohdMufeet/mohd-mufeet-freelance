@@ -3,11 +3,12 @@ import { Container } from "@/components/shared/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { PortfolioStats } from "@/components/shared/PortfolioStats";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { Section } from "@/components/shared/Section";
 import { TechChip } from "@/components/shared/TechChip";
 import { isContactSubmissionEnabled } from "@/lib/contact/config";
-import { getAbout, getExperience, getFeaturedProjects, getProcessSteps, getServices, getSiteConfig, getSkills, getTestimonials, getVisibleSocialLinks } from "@/lib/content";
+import { getAbout, getExperience, getFeaturedProjects, getProcessSteps, getPublishedProjects, getServices, getSiteConfig, getSkills, getTestimonials, getVisibleSocialLinks } from "@/lib/content";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createPageMetadata({
@@ -22,12 +23,43 @@ export default function Home() {
   const skills = getSkills();
   const services = getServices();
   const featuredProjects = getFeaturedProjects();
+  const publishedProjects = getPublishedProjects();
   const about = getAbout();
   const experience = getExperience();
   const processSteps = getProcessSteps();
   const testimonials = getTestimonials();
   const socialLinks = getVisibleSocialLinks("contact");
   const activeServices = getServices("active");
+  const apiCount = publishedProjects.reduce((highestCount, project) => {
+    const apiFeature = project.caseStudy.features.find((feature) =>
+      /^\d+\+ REST APIs$/.test(feature),
+    );
+    const count = apiFeature ? Number.parseInt(apiFeature, 10) : 0;
+    return Math.max(highestCount, count);
+  }, 0);
+  const portfolioStats = [
+    {
+      value: publishedProjects.length,
+      label: "Verified projects",
+      detail: "Published work you can explore",
+    },
+    {
+      value: apiCount,
+      suffix: apiCount > 0 ? "+" : undefined,
+      label: "REST APIs",
+      detail: "Built for real application workflows",
+    },
+    {
+      value: activeServices.length,
+      label: "Active services",
+      detail: "Ways I can help your next build",
+    },
+    {
+      value: skills.length,
+      label: "Skill areas",
+      detail: "From frontend to core concepts",
+    },
+  ];
   const personJsonLd = siteConfig.url
     ? {
         "@context": "https://schema.org",
@@ -70,12 +102,27 @@ export default function Home() {
           </nav>
 
           <div className="mt-12 grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-md border border-border bg-surface p-6 font-mono text-small text-muted-foreground">
-              <p>profile.config</p>
-              <div className="mt-4 space-y-2">
-                <p>role: {siteConfig.role}</p>
-                <p>location: {siteConfig.location.locality}, {siteConfig.location.region}, {siteConfig.location.country}</p>
-                <p>stack: [{skills.flatMap((group) => group.items).slice(0, 7).join(", ")}]</p>
+            <div className="overflow-hidden rounded-md border border-border bg-surface">
+              <div className="flex items-center justify-between border-b border-border bg-surface-raised px-5 py-3">
+                <p className="font-mono text-small text-foreground">profile.config</p>
+                <span className="flex items-center gap-2 text-label text-muted-foreground">
+                  <span className="h-2 w-2 rounded-full bg-success" aria-hidden="true" />
+                  Profile data
+                </span>
+              </div>
+              <div className="space-y-1 p-5 font-mono text-small leading-7">
+                <p className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-3">
+                  <span className="text-muted-foreground/60" aria-hidden="true">01</span>
+                  <span className="break-words"><span className="text-accent">role</span>: <span className="text-foreground">{siteConfig.role}</span></span>
+                </p>
+                <p className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-3">
+                  <span className="text-muted-foreground/60" aria-hidden="true">02</span>
+                  <span className="break-words"><span className="text-accent">location</span>: <span className="text-foreground">{siteConfig.location.locality}, {siteConfig.location.region}, {siteConfig.location.country}</span></span>
+                </p>
+                <p className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-3">
+                  <span className="text-muted-foreground/60" aria-hidden="true">03</span>
+                  <span className="break-words"><span className="text-accent">stack</span>: <span className="text-foreground">[{skills.flatMap((group) => group.items).slice(0, 7).join(", ")}]</span></span>
+                </p>
               </div>
             </div>
             <div className="rounded-md border border-border bg-surface p-6">
@@ -88,6 +135,8 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      <PortfolioStats stats={portfolioStats} />
 
       <Section id="skills" eyebrow="Technologies" title="Tools I build with" description="The technologies I use to design, build, and ship web applications.">
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">

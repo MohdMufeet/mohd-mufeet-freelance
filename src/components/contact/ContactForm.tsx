@@ -74,20 +74,6 @@ export function ContactForm({
     },
   });
 
-  if (!enabled) {
-    return (
-      <div className="rounded-md border border-border bg-surface p-6">
-        <h2 className="text-h3 font-semibold text-foreground">
-          The enquiry form isn&apos;t available yet
-        </h2>
-        <p className="mt-3 text-muted-foreground">
-          Direct enquiry submissions will open after the contact service and privacy notice are configured.
-          You can use the confirmed profile links on this page in the meantime.
-        </p>
-      </div>
-    );
-  }
-
   const startTimer = () => {
     setStartedAt((current) => (current === null ? getNow() : current));
   };
@@ -183,7 +169,19 @@ export function ContactForm({
       noValidate
       aria-busy={isSubmitting}
     >
-      <fieldset disabled={isSubmitting} className="space-y-4">
+      {!enabled ? (
+        <div
+          className="status-message mb-5"
+          role="status"
+          aria-live="polite"
+        >
+          <p className="text-small text-muted-foreground">
+            Online enquiries are temporarily unavailable. Please use the
+            contact links on this page to get in touch.
+          </p>
+        </div>
+      ) : null}
+      <fieldset disabled={!enabled || isSubmitting} className="space-y-4">
         <div>
           <label htmlFor="fullName" className="mb-2 block text-small font-medium text-foreground">
             Full name
@@ -299,7 +297,7 @@ export function ContactForm({
         <button
           type="submit"
           className="button-link button-link--primary w-full justify-center"
-          disabled={isSubmitting}
+          disabled={!enabled || isSubmitting}
         >
           {isSubmitting ? "Sending…" : "Send enquiry"}
         </button>

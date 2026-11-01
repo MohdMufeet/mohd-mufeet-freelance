@@ -206,6 +206,35 @@ a {
     transform var(--duration-fast) var(--ease-standard);
 }
 
+.portfolio-stats {
+  overflow: hidden;
+}
+
+.portfolio-stat {
+  position: relative;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.portfolio-stat:hover {
+  background: var(--surface-raised);
+}
+
+.portfolio-stat + .portfolio-stat {
+  border-left: 1px solid var(--border);
+}
+
+.portfolio-stat__rule {
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0.65);
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+.portfolio-stat:hover .portfolio-stat__rule {
+  transform: scaleX(1.35);
+}
+
 .service-card:hover,
 .project-card:hover {
   border-color: var(--accent);

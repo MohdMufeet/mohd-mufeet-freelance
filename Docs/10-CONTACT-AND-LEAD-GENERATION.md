@@ -81,7 +81,7 @@ Retention (DRAFT, confirm with OQ-22): keep enquiries only as long as needed to 
 | Disallowed origin / bad content-type / too large | 400 | `{ "ok": false, "code": "BAD_REQUEST" }` | |
 | Rate limited | 429 | `{ "ok": false, "code": "RATE_LIMITED" }` | Optional `Retry-After` |
 | Database or unexpected error | 500 | `{ "ok": false, "code": "SERVER_ERROR" }` | No details leaked |
-| Integrations not configured or submissions not enabled | 503 | `{ "ok": false, "code": "SERVICE_UNAVAILABLE" }` | UI does not collect enquiry data until approved setup is complete |
+| Integrations not configured or submissions not enabled | 503 | `{ "ok": false, "code": "SERVICE_UNAVAILABLE" }` | UI shows the form preview with disabled fields until approved setup is complete |
 
 Other methods → 405. Responses use `Cache-Control: no-store`.
 
@@ -90,6 +90,7 @@ Other methods → 405. Responses use `Cache-Control: no-store`.
 | State | Behaviour |
 |---|---|
 | Idle | Empty form; service possibly pre-selected via `?service=` |
+| Submissions disabled | Form preview remains visible with every field and the submit button disabled; explanatory status message points to confirmed contact channels |
 | Validating | Inline errors; no network call until valid |
 | Submitting | Button disabled + "Sending…", `aria-busy` on form; fields read-only |
 | Success | Confirmation message (`role="status"`), form cleared; optional toast; link back to Home/Projects |

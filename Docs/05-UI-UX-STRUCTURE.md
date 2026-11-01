@@ -42,15 +42,16 @@ Each section uses `Section` + `SectionHeading`, has an `id` for anchors, and its
 |---|---|---|---|---|---|
 | 1 | Navbar | See §2 | `navigation` | Sheet menu | Never |
 | 2 | Hero | Two columns: text left (60%), manifest panel right (40%) | `site`, `skills` | Stacked; panel below CTAs, simplified | Never |
-| 3 | Technologies / Skills | Five groups in a responsive grid of labelled chip lists | `skills` | Single column groups | Never |
-| 4 | Services | 3-column grid of `ServiceCard` (active only) | `services` | 1 column | No active services |
-| 5 | Featured Projects | Up to 3 large `ProjectCard`s, alternating media/text rows | `projects` | Stacked | No featured projects (show EmptyState with Contact CTA) |
-| 6 | About Me | Text with optional photo | `about` | Photo above text | Never (text only if no photo) |
-| 7 | Professional Experience | Vertical timeline/list of `ExperienceItem` | `experience` | Same, compact | No verified entries |
-| 8 | Work Process | Numbered steps in a row/grid | `process` | Vertical list | Until approved (OQ-18) |
-| 9 | Testimonials | Cards | `testimonials` | Single column | No entries (default) |
-| 10 | Contact | Left: copy + channels; right: form | `contact`, `social`, `services` | Stacked, form first | Never |
-| 11 | Footer | See §2 | | Stacked | Never |
+| 3 | Portfolio Stats | Four count-up cards for verified projects, documented REST APIs, active services, and skill areas | `projects`, `services`, `skills` | Two columns, then one on narrow screens | Never; unavailable metrics show zero |
+| 4 | Technologies / Skills | Five groups in a responsive grid of labelled chip lists | `skills` | Single column groups | Never |
+| 5 | Services | 3-column grid of `ServiceCard` (active only) | `services` | 1 column | No active services |
+| 6 | Featured Projects | Up to 3 large `ProjectCard`s, alternating media/text rows | `projects` | Stacked | No featured projects (show EmptyState with Contact CTA) |
+| 7 | About Me | Text with optional photo | `about` | Photo above text | Never (text only if no photo) |
+| 8 | Professional Experience | Vertical timeline/list of `ExperienceItem` | `experience` | Same, compact | No verified entries |
+| 9 | Work Process | Numbered steps in a row/grid | `process` | Vertical list | Until approved (OQ-18) |
+| 10 | Testimonials | Cards | `testimonials` | Single column | No entries (default) |
+| 11 | Contact | Left: copy + channels; right: form | `contact`, `social`, `services` | Stacked, form first | Never |
+| 12 | Footer | See §2 | | Stacked | Never |
 
 Each section ends with an implicit forward path: Services → "Discuss your project"; Projects → "View all projects"; Experience → none; Process → Contact CTA.
 
@@ -72,6 +73,8 @@ Right panel (editor-style, mono):
 ```
 
 Rules: panel values come from config (no duplicated literals); the stack line uses a subset of confirmed skills; the headline is the only `text-display` element; no scroll-jacking; hero LCP element is text (not an image).
+
+Portfolio stats count only published, verified projects and configured services/skill groups. API totals must come from an explicit verified project feature; do not infer years, days, or other unsupported claims. Count-up motion starts on scroll and respects reduced-motion preferences.
 
 ## 5. Services page (`/services`)
 
