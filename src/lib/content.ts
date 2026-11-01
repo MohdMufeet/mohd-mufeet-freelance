@@ -54,7 +54,7 @@ export function getProcessSteps() {
 }
 
 export function getTestimonials() {
-  return testimonials;
+  return testimonials.filter((testimonial) => testimonial.permissionConfirmed);
 }
 
 export function getVisibleSocialLinks(

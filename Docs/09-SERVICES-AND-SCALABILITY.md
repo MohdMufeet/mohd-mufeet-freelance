@@ -69,7 +69,7 @@ These entries are **not required** in the initial config. If included for conven
 | Lead management | Dashboard exists | Use `status` lifecycle in `10` §6 |
 | Project/service/testimonial management | > ~10 projects or frequent edits | Move config to Supabase tables; change only `lib/content.ts` |
 | CMS | Content editors besides owner | Evaluate then; ADR required |
-| Light theme | Owner request | Fill the `.light` token override (`04` §4) |
+| Dark/light theme toggle | CURRENT | Dark default; selection persists in browser storage; tokens in `04` §3 |
 | i18n | OQ-21 | Evaluate Next.js i18n routing |
 
 Avoid premature engineering: none of the above may add code, tables, or dependencies before its trigger and owner approval.

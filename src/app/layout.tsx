@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { JsonLd } from "@/components/shared/JsonLd";
@@ -58,8 +59,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full bg-background text-foreground">
+        <Script
+          id="theme-preference"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html:
+              'try { document.documentElement.classList.toggle("light", localStorage.getItem("portfolio-theme") === "light"); } catch (error) { console.error("Unable to read the saved color theme.", error); }',
+          }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-foreground focus:px-4 focus:py-3 focus:text-background"

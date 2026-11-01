@@ -16,23 +16,31 @@
 
 Generic gradient hero blobs; excessive gradients; unnecessary glassmorphism; stacks of heavily rounded cards; floating random shapes; emoji as decoration; fake stats counters; fake testimonials; skill percentage bars; auto-playing carousels; parallax overload; more than one animated element competing in a viewport.
 
-## 3. Colour tokens (v1: single dark theme — A-03)
+## 3. Colour tokens (dark and light themes)
 
-| Token | Value (proposed) | Use |
-|---|---|---|
-| `--background` | `#0C0C0D` | Page background |
-| `--surface` | `#141416` | Cards, panels |
-| `--surface-raised` | `#1B1B1E` | Popovers, hover surfaces |
-| `--border` | `#26262A` | Dividers, outlines |
-| `--foreground` | `#EDEDEA` | Primary text |
-| `--muted-foreground` | `#A1A1A6` | Secondary text (verify ≥ 4.5:1 on `--background`) |
-| `--accent` | `#F5A524` | Primary CTA, links emphasis, focus ring |
-| `--accent-foreground` | `#0C0C0D` | Text on accent |
-| `--destructive` | `#F0624D` | Errors |
-| `--success` | `#4CC38A` | Success states |
-| `--ring` | `var(--accent)` | Focus ring |
+Dark is the default theme. The navbar toggle switches the whole site between
+dark and light, and saves the selection in browser `localStorage` under
+`portfolio-theme`. The saved theme is applied before the first paint. If there
+is no saved preference, the site uses dark mode.
 
-Rules: body text ≥ 4.5:1, large text/UI ≥ 3:1; never rely on colour alone for state; gradients are limited to at most one subtle background radial per page. Light theme tokens are FUTURE: define variable names now (`:root` and a `.light` override hook) without shipping the theme.
+| Token | Dark | Light | Use |
+|---|---|---|---|
+| `--background` | `#0C0C0D` | `#FAFAF8` | Page background |
+| `--surface` | `#141416` | `#FFFFFF` | Cards, panels |
+| `--surface-raised` | `#1B1B1E` | `#F1F1ED` | Popovers, hover surfaces |
+| `--border` | `#26262A` | `#DEDED8` | Dividers, outlines |
+| `--foreground` | `#EDEDEA` | `#171718` | Primary text |
+| `--muted-foreground` | `#A1A1A6` | `#5B5B60` | Secondary text |
+| `--accent` | `#F5A524` | `#885300` | Primary CTA, links emphasis, focus ring |
+| `--accent-foreground` | `#0C0C0D` | `#FFFFFF` | Text on accent |
+| `--destructive` | `#F0624D` | `#B83220` | Errors |
+| `--success` | `#4CC38A` | `#167347` | Success states |
+| `--ring` | `var(--accent)` | `var(--accent)` | Focus ring |
+
+Rules: body text ≥ 4.5:1, large text/UI ≥ 3:1; never rely on colour alone for
+state; gradients are limited to at most one subtle background radial per page.
+Keep theme colors in the CSS variables in `src/app/globals.css`; components use
+the shared Tailwind tokens rather than hardcoded colors.
 
 ## 5. Typography
 

@@ -119,4 +119,4 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 
 ## 13. Post-launch backlog (FUTURE, not planned work)
 
-Analytics decision, blog, resume page, admin dashboard, additional service categories, testimonials once genuine, light theme.
+Analytics decision, blog, resume page, admin dashboard, additional service categories, testimonials once genuine.

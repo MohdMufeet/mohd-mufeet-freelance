@@ -48,6 +48,49 @@ integrations and contact channels remain inactive until configured.
 Environment variables are listed in `06-TECHNICAL-ARCHITECTURE.md` §7. Never
 commit secrets.
 
+## Adding or updating site content
+
+There is no CMS or admin dashboard yet. Content is kept in typed files under
+`src/config/`; after changing content, run the checks and deploy the site.
+
+| Content | File | Notes |
+|---|---|---|
+| Projects and case studies | `src/config/projects.ts` | Add one object per real project. A project appears publicly only when `status` is `"published"` and `verified` is `true`. Fill in only confirmed details; the case-study page uses the object's `slug`. |
+| Testimonials | `src/config/testimonials.ts` | Add genuine feedback only after the client has given permission. `permissionConfirmed` must be `true`; testimonials then appear in the homepage section. |
+| Services | `src/config/services.ts` | Add or edit service entries; use unique slugs and verified, published project slugs for `projectRefs`. |
+| Skills | `src/config/skills.ts` | Edit the skills groups and items. |
+| Experience | `src/config/experience.ts` | Add verified roles and dates. |
+| About and photo | `src/config/about.ts` | Edit the introduction/background and set a supplied photo path if available. |
+| Work process | `src/config/process.ts` | Edit the process steps. |
+| Social/contact links | `src/config/social.ts` | Set profile URLs and placements. Email and WhatsApp links are currently unset. |
+| Site name, description, contact details | `src/config/site.ts` | Update site metadata and approved contact details. |
+
+Currently, the only project recorded is **Client Blog Platform**. It is still a
+draft and is hidden until its details are verified and approved. Other projects
+are not listed yet; add them to `src/config/projects.ts` once their names,
+links, role, technologies, and publishable details are supplied and confirmed.
+
+The `.env.example` file is **not** where project, testimonial, or social links
+are added. It contains deployment configuration:
+
+| Variable(s) | What to put there / where to get it |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | The portfolio's final HTTPS domain (your Vercel domain or custom domain). |
+| `SUPABASE_URL` | The Supabase project's URL from its project/API settings. |
+| `SUPABASE_SERVICE_ROLE_KEY` | The Supabase service-role key from project/API settings. Keep it secret; never use a `NEXT_PUBLIC_` prefix. |
+| `RESEND_API_KEY` | An API key created in your Resend account. Keep it secret. |
+| `CONTACT_TO_EMAIL` | The inbox where contact-form notifications should arrive. |
+| `CONTACT_FROM_EMAIL` | A sender address verified in Resend for your domain. |
+| `IP_HASH_SECRET` | A strong, randomly generated secret used to hash submitted IP addresses. Keep it secret. |
+| `CONTACT_SUBMISSIONS_ENABLED` | Leave `false` until privacy approval, the Supabase migration, and all required contact settings are ready; only then set it to `true`. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Optional Cloudflare Turnstile site key and secret from its widget settings. The secret must stay server-side. |
+
+For local development, put actual values in the git-ignored `.env.local`. For
+production, add them in the hosting provider's environment-variable settings
+(for Vercel: Project Settings → Environment Variables). Keep `.env.example`
+committed with empty values only. Public profile, project, email, and WhatsApp
+links belong in the `src/config/` files above, not in environment variables.
+
 ## Contributing / agent workflow
 
 1. Read all docs.

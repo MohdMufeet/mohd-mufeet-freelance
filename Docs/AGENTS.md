@@ -61,4 +61,4 @@ Follow `docs/12` and `docs/10`: one shared Zod schema, server-side validation as
 
 ## 7. Out of scope unless approved
 
-Blog, admin dashboard, CMS, authentication, payments, analytics, theme toggle, i18n, auto-reply emails, Turnstile, project filtering (before 6 projects).
+Blog, admin dashboard, CMS, authentication, payments, analytics, i18n, auto-reply emails, Turnstile, project filtering (before 6 projects).

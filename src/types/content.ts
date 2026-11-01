@@ -88,7 +88,7 @@ export const testimonialSchema = z.object({
   quote: z.string().min(1),
   author: z.string().min(1),
   role: z.string().nullable(),
-  permissionConfirmed: z.literal(true),
+  permissionConfirmed: z.boolean(),
 });
 
 export type Service = z.infer<typeof serviceSchema>;

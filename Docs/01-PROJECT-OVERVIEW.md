@@ -41,7 +41,7 @@ Anything not in this table or in the owner's brief is **unknown** and must follo
 Home page (11 sections), About, Services, Projects, Project Case Studies, Contact, custom 404, contact form with Supabase storage and Resend notification, WhatsApp/email/LinkedIn CTAs, centralised social config, SEO foundations, accessibility, performance work, tests, Vercel deployment.
 
 ### Out of scope (initial release)
-Blog, admin dashboard, CMS, lead management UI, testimonials management, payments, user accounts, SEO/marketing service delivery pages as "live" services, multi-language support, theme toggle. These are architecturally anticipated (see `09`) but **not built**.
+Blog, admin dashboard, CMS, lead management UI, testimonials management, payments, user accounts, SEO/marketing service delivery pages as "live" services, and multi-language support. These are architecturally anticipated (see `09`) but **not built**.
 
 ## 4. Feature status classification
 
@@ -69,12 +69,12 @@ Every feature in every document uses one of these labels.
 | Direct email link | CURRENT (conditional) + EXTERNAL | Needs public address (OQ-01) |
 | Resume download | CURRENT (conditional) + EXTERNAL | Needs PDF (OQ-03); hidden if absent |
 | Social links | CURRENT | Only confirmed URLs render |
+| Dark and light themes with navbar toggle | CURRENT | Dark is default; preference is saved in browser storage |
 | Project filtering | OPTIONAL | Enable only when ≥ 6 projects exist |
 | Cloudflare Turnstile | OPTIONAL + EXTERNAL | Baseline protection is honeypot + rate limit (OQ-15) |
 | Auto-reply email to enquirer | OPTIONAL | |
 | Analytics | OPTIONAL | Privacy-friendly only; OQ-16 |
 | Dynamic OG images | OPTIONAL | Static default OG image is CURRENT |
-| Light theme / theme toggle | FUTURE | Tokens are structured to allow it |
 | Blog / Articles | FUTURE | |
 | Resume page | FUTURE | Download button is CURRENT (conditional) |
 | Admin dashboard, lead management, CMS, service/project/testimonial management | FUTURE | |
@@ -118,7 +118,7 @@ If two documents disagree, the owning document wins, and the other must be corre
 |---|---|
 | A-01 | Site language is English only at launch. |
 | A-02 | Primary audience: small businesses, startups, and individuals needing web applications or business websites. Unverified hypothesis; used only to shape tone, never as a public claim. |
-| A-03 | v1 ships a single dark theme; tokens allow a future light theme. |
+| A-03 | Dark is the default theme; visitors can switch to light mode and their preference is saved in the browser. |
 | A-04 | Production host is Vercel; the current Netlify portfolio stays live until the new site is approved (OQ-05). |
 | A-05 | Latest stable versions of Next.js, React, Tailwind, shadcn/ui are used at Phase 1 and then pinned. |
 | A-06 | Project data lives in typed TypeScript config files, not a database, in v1 (ADR-04). |
@@ -146,7 +146,7 @@ Blocking = needed before launch. Non-blocking = a sensible default exists.
 | OQ-14 | Supabase org/region; Resend account and verified sending domain | Contact backend | Yes | Dev-only keys until resolved |
 | OQ-15 | Add Turnstile (or similar) beyond honeypot + rate limit? | Spam protection | No | Honeypot + rate limit only |
 | OQ-16 | Analytics at launch? | Analytics | No | None |
-| OQ-17 | Logo/wordmark, accent colour approval, light theme wanted? | Design system | No | Text wordmark; proposed palette in `04` |
+| OQ-17 | Logo/wordmark and accent colour approval | Design system | No | Text wordmark; proposed palette in `04`; dark/light toggle added |
 | OQ-18 | Approve work-process steps and any support promises | Process section | No | Draft in `07` §8 |
 | OQ-19 | Pricing / engagement models shown? | Services | No | Not shown |
 | OQ-20 | Any genuine, permitted testimonials | Testimonials | No | Section hidden |

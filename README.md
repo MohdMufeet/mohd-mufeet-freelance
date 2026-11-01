@@ -12,7 +12,7 @@ in [`Docs/`](./Docs/README.md).
 - Geist Sans and Geist Mono through `next/font`
 - npm lockfile with pinned package versions
 
-Pinned versions: Next.js 16.4.3, React/React DOM 19.3.0, TypeScript 5.9.3,
+Pinned versions: Next.js 16.4.3, React/React DOM 19.3.1, TypeScript 5.9.3,
 Tailwind CSS 4.3.3, ESLint 9.39.5, Zod 4.6.7, Supabase JS 2.118.0, Resend
 6.37.0, React Hook Form 7.91.0, and Vitest 5.0.5. The exact full dependency
 tree is recorded in `package-lock.json`.
@@ -21,6 +21,9 @@ The contact pipeline uses Supabase and Resend after owner-controlled setup.
 Enquiry collection remains disabled until the privacy notice is approved, the
 migration is applied, all server-side environment values are configured, and
 `CONTACT_SUBMISSIONS_ENABLED=true`. No credentials belong in the repository.
+
+The site defaults to dark mode. Use the Theme button in the navbar to switch
+between dark and light mode; the choice is saved in this browser.
 
 ## Local development
 
@@ -68,6 +71,8 @@ Features depending on those values remain hidden or inactive.
 - `src/lib/content.ts` — the public content access layer
 - `src/types/` — Zod schemas and inferred content types
 - `Docs/` — requirements, architecture, security, and implementation plan
+- [`Docs/README.md`](./Docs/README.md) — where to add projects, testimonials, other content, and environment values
+- [`Docs/04-DESIGN-SYSTEM.md`](./Docs/04-DESIGN-SYSTEM.md) — color tokens and theme behavior
 
 GitHub Actions runs lint, type-check, and production build checks on pushes to
 `main` and pull requests. Vercel, Supabase, and Resend setup still requires

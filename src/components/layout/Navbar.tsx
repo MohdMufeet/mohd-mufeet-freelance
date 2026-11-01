@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ButtonLink } from "@/components/shared/ButtonLink";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { navigation } from "@/config/navigation";
 import { getVisibleSocialLinks } from "@/lib/content";
 
@@ -91,12 +92,15 @@ export function Navbar() {
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="container-shell flex h-20 items-center justify-between gap-4">
+      <div className="container-shell flex h-20 items-center gap-4">
         <Link href="/" className="text-lg font-semibold tracking-tight text-foreground">
           Mohd Mufeet
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
+        <nav
+          aria-label="Main navigation"
+          className="hidden flex-1 items-center justify-center gap-8 lg:flex"
+        >
           {navigation.map((item) => {
             const href = isHome ? sectionMap[item.href] ?? item.href : item.href;
             const isActive = isHome
@@ -120,28 +124,30 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="hidden md:block">
-          <ButtonLink href="/contact">Let&apos;s Work Together</ButtonLink>
+        <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
+          <ThemeToggle />
+          <div className="hidden lg:block">
+            <ButtonLink href="/contact">Let&apos;s Work Together</ButtonLink>
+          </div>
+          <button
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded={isOpen}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground lg:hidden"
+            onClick={() => setIsOpen((open) => !open)}
+          >
+            <span className="sr-only">Toggle menu</span>
+            <span className="flex flex-col gap-1.5">
+              <span className="block h-0.5 w-5 rounded-full bg-current" />
+              <span className="block h-0.5 w-5 rounded-full bg-current" />
+              <span className="block h-0.5 w-5 rounded-full bg-current" />
+            </span>
+          </button>
         </div>
-
-        <button
-          type="button"
-          aria-label="Open navigation menu"
-          aria-expanded={isOpen}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground md:hidden"
-          onClick={() => setIsOpen((open) => !open)}
-        >
-          <span className="sr-only">Toggle menu</span>
-          <span className="flex flex-col gap-1.5">
-            <span className="block h-0.5 w-5 rounded-full bg-current" />
-            <span className="block h-0.5 w-5 rounded-full bg-current" />
-            <span className="block h-0.5 w-5 rounded-full bg-current" />
-          </span>
-        </button>
       </div>
 
       {isOpen ? (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-border bg-background lg:hidden">
           <div className="container-shell flex flex-col gap-3 py-4">
             {navigation.map((item) => {
               const href = isHome ? sectionMap[item.href] ?? item.href : item.href;
