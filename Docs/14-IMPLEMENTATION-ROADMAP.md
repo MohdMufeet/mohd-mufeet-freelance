@@ -55,6 +55,7 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 - **Deliverables:** Projects pages with verified content only.
 - **Dependencies:** Phase 2; owner-verified content (OQ-07/08).
 - **Acceptance:** FR-PROJ-01/02/03/05, FR-PAGE-02; no invented content; unverified projects not published.
+- **Status (2026-11-01):** Verified-only cards, statically generated case-study routes, conditional case-study fields, and empty-state/404 handling are implemented. No case study is published because OQ-07 content verification is still outstanding.
 
 ## Phase 6 — About and Experience
 - **Objectives:** Credible, accurate personal story.
@@ -62,6 +63,7 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 - **Deliverables:** About, Experience, Process, Testimonials (hidden).
 - **Dependencies:** Phase 2; OQ-06/09/18.
 - **Acceptance:** KAP Controls wording matches `07` §7 exactly; no forbidden phrasing; testimonials hidden when empty; unresolved MISSING items listed.
+- **Status (2026-11-01):** About, skills, services links, and conditional experience surfaces are implemented. Unverified experience and missing personal story fields remain omitted; process and testimonials remain absent until approved/genuine content is supplied (OQ-06/09/18/20).
 
 ## Phase 7 — Contact and Lead Generation
 - **Objectives:** Working enquiry pipeline.
@@ -69,6 +71,7 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 - **Deliverables:** End-to-end contact flow on a preview environment.
 - **Dependencies:** Phase 2; Supabase/Resend accounts, verified sender (OQ-14), contact details (OQ-01/02).
 - **Acceptance:** FR-CON-01…09, FR-SOC-01…03, T-FORM, T-API, T-SEC, T-SOC tests pass; real test enquiry stored and emailed; secrets absent from bundle; rate limit verified.
+- **Status (2026-11-01):** Shared client/server Zod validation, accessible form UI, origin/body checks, honeypot/time checks, hashed-IP and email DB-backed limits, Supabase store-first/Resend notification, and RLS migration are implemented. Form submissions are deliberately disabled until OQ-22 privacy approval and Supabase/Resend configuration are complete. No real integration test has been run.
 
 ## Phase 8 — Responsive Design and Animations
 - **Objectives:** Polish without bloat.
@@ -76,6 +79,7 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 - **Deliverables:** Responsive, lightly animated site.
 - **Dependencies:** Phases 3–7.
 - **Acceptance:** T-RES-01; no CLS from animation; animations limited to allowed list; INP unaffected.
+- **Status (2026-11-01):** Responsive form layouts, mobile-stacked hero CTAs, card hover/focus transitions, and reduced-motion styles are implemented. Manual multi-browser/device review remains pending.
 
 ## Phase 9 — SEO and Performance
 - **Objectives:** Meet `11`.
@@ -83,6 +87,7 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 - **Deliverables:** SEO and performance baseline report.
 - **Dependencies:** Phases 3–7; OQ-05 for canonical domain.
 - **Acceptance:** T-SEO-01, T-PERF-01; budgets in `11` §8 met or deviations documented with reason.
+- **Status (2026-11-01):** Per-route metadata, generated OG image, safe Person/WebSite/CreativeWork JSON-LD, sitemap, robots, and report-only CSP/security headers are implemented. Canonicals and sitemap URLs remain unavailable until OQ-05 supplies a production URL; Lighthouse targets have not been measured.
 
 ## Phase 10 — Testing and Deployment
 - **Objectives:** Launch-ready site.
@@ -90,6 +95,7 @@ Phases 3–6 may run in any order after Phase 2; Phase 7's backend work can star
 - **Deliverables:** Production deployment; handover notes.
 - **Dependencies:** All prior phases; OQ-05/14.
 - **Acceptance:** Definition of done (`13` §4) for every feature; launch checklist (§12) complete; docs match the implemented behaviour.
+- **Status (2026-11-01):** Lint, TypeScript, unit tests, production dependency audit, and production build are covered in CI. Production deployment, manual accessibility/performance QA, RLS verification, live enquiry test, production security-header verification, and owner launch sign-off remain outstanding.
 
 ## 11. Approval gates
 

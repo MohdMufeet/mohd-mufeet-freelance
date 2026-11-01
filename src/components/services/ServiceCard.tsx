@@ -8,7 +8,7 @@ type ServiceCardProps = {
 
 export function ServiceCard({ service }: ServiceCardProps) {
   return (
-    <article className="flex h-full flex-col rounded-md border border-border bg-surface p-6">
+    <article className="service-card flex h-full flex-col rounded-md border border-border bg-surface p-6">
       <p className="text-label uppercase tracking-[0.12em] text-accent">
         {service.category}
       </p>

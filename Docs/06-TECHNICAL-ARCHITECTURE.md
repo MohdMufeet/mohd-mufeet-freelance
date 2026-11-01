@@ -162,6 +162,7 @@ Security: Row Level Security **enabled with no policies for `anon`/`authenticate
 | Variable | Scope | Purpose |
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | public | Canonical base URL (OQ-05) |
+| `CONTACT_SUBMISSIONS_ENABLED` | server | Explicit enable flag; must be `true` only after privacy notice approval and integration setup |
 | `SUPABASE_URL` | server | Project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | **server secret** | Insert enquiries; never exposed |
 | `RESEND_API_KEY` | **server secret** | Send email |
@@ -171,6 +172,8 @@ Security: Row Level Security **enabled with no policies for `anon`/`authenticate
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` | public / secret | OPTIONAL (OQ-15) |
 
 Rules: secrets only in Vercel env settings and local `.env.local` (git-ignored); commit `.env.example` with names and empty values only; no secret is ever prefixed `NEXT_PUBLIC_`; server-only modules import `server-only`.
+
+The contact API returns `503 SERVICE_UNAVAILABLE` and the UI does not collect form data until `CONTACT_SUBMISSIONS_ENABLED=true` and all required Supabase/Resend settings are present. This gate stays off until OQ-22 is resolved and the migration is applied.
 
 ## 8. Error handling and logging
 

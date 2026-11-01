@@ -1,3 +1,15 @@
+import { z } from "zod";
+
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || null;
+const siteUrl = z
+  .string()
+  .url()
+  .refine((value) => value.startsWith("https://"), {
+    message: "NEXT_PUBLIC_SITE_URL must use HTTPS.",
+  })
+  .nullable()
+  .parse(configuredSiteUrl);
+
 export const siteConfig = {
   name: "Mohd Mufeet",
   title: "Mohd Mufeet – Freelance Full Stack Developer",
@@ -9,11 +21,12 @@ export const siteConfig = {
     region: "Uttar Pradesh",
     country: "India",
   },
-  url: null as string | null,
+  url: siteUrl,
+  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   contact: {
     email: null as string | null,
     whatsappNumber: null as string | null,
     whatsappMessage: "Hi Mufeet, I'd like to discuss a project.",
     resumePath: null as string | null,
   },
-} as const;
+};

@@ -1,10 +1,21 @@
 import { ButtonLink } from "@/components/shared/ButtonLink";
 import { Container } from "@/components/shared/Container";
+import { ContactForm } from "@/components/contact/ContactForm";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { JsonLd } from "@/components/shared/JsonLd";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { Section } from "@/components/shared/Section";
 import { TechChip } from "@/components/shared/TechChip";
+import { isContactSubmissionEnabled } from "@/lib/contact/config";
 import { getAbout, getExperience, getFeaturedProjects, getProcessSteps, getServices, getSiteConfig, getSkills, getTestimonials, getVisibleSocialLinks } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata = createPageMetadata({
+  path: "/",
+  title: "Mohd Mufeet – Freelance Full Stack Developer",
+  description:
+    "Freelance Full Stack Developer in Kanpur, India, building modern, scalable web applications with Next.js, React, and the MERN stack.",
+});
 
 export default function Home() {
   const siteConfig = getSiteConfig();
@@ -16,9 +27,30 @@ export default function Home() {
   const processSteps = getProcessSteps();
   const testimonials = getTestimonials();
   const socialLinks = getVisibleSocialLinks("contact");
+  const activeServices = getServices("active");
+  const personJsonLd = siteConfig.url
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: siteConfig.name,
+        jobTitle: siteConfig.role,
+        url: siteConfig.url,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: siteConfig.location.locality,
+          addressRegion: siteConfig.location.region,
+          addressCountry: siteConfig.location.country,
+        },
+        sameAs: socialLinks
+          .filter((link) => link.kind === "profile" && link.url)
+          .map((link) => link.url),
+        knowsAbout: skills.flatMap((group) => group.items),
+      }
+    : null;
 
   return (
     <main id="main">
+      {personJsonLd ? <JsonLd data={personJsonLd} /> : null}
       <section id="home" className="section-shell">
         <Container>
           <p className="font-mono text-label uppercase tracking-[0.2em] text-muted-foreground">
@@ -30,21 +62,14 @@ export default function Home() {
           <p className="mt-6 max-w-2xl text-body-lg text-muted-foreground">
             {siteConfig.description}
           </p>
-          <nav className="mt-8 flex flex-wrap gap-3" aria-label="Primary">
-            <ButtonLink href="/contact">Let&apos;s Work Together</ButtonLink>
-            <ButtonLink href="/projects" variant="secondary">
+          <nav className="mt-8 flex flex-col gap-3 sm:flex-row" aria-label="Primary">
+            <ButtonLink href="/contact" className="w-full sm:w-auto">Let&apos;s Work Together</ButtonLink>
+            <ButtonLink href="/projects" variant="secondary" className="w-full sm:w-auto">
               Explore My Work
             </ButtonLink>
           </nav>
 
           <div className="mt-12 grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-md border border-border bg-surface p-6">
-              <p className="text-label uppercase tracking-[0.12em] text-accent">Profile</p>
-              <p className="mt-4 text-h3 font-semibold text-foreground">{siteConfig.role}</p>
-              <p className="mt-3 text-muted-foreground">
-                {siteConfig.location.locality}, {siteConfig.location.region}, {siteConfig.location.country}
-              </p>
-            </div>
             <div className="rounded-md border border-border bg-surface p-6 font-mono text-small text-muted-foreground">
               <p>profile.config</p>
               <div className="mt-4 space-y-2">
@@ -52,6 +77,13 @@ export default function Home() {
                 <p>location: {siteConfig.location.locality}, {siteConfig.location.region}, {siteConfig.location.country}</p>
                 <p>stack: [{skills.flatMap((group) => group.items).slice(0, 7).join(", ")}]</p>
               </div>
+            </div>
+            <div className="rounded-md border border-border bg-surface p-6">
+              <p className="text-label uppercase tracking-[0.12em] text-accent">Profile</p>
+              <p className="mt-4 text-h3 font-semibold text-foreground">{siteConfig.role}</p>
+              <p className="mt-3 text-muted-foreground">
+                {siteConfig.location.locality}, {siteConfig.location.region}, {siteConfig.location.country}
+              </p>
             </div>
           </div>
         </Container>
@@ -129,8 +161,8 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="experience" eyebrow="Experience" title="Where I&apos;ve worked" description="Verified experience and project context only.">
-        {experience.length > 0 ? (
+      {experience.length > 0 ? (
+        <Section id="experience" eyebrow="Experience" title="Where I&apos;ve worked" description="Verified experience and project context only.">
           <div className="space-y-4">
             {experience.map((item) => (
               <article key={`${item.company}-${item.role}`} className="rounded-md border border-border bg-surface p-6">
@@ -149,17 +181,11 @@ export default function Home() {
               </article>
             ))}
           </div>
-        ) : (
-          <EmptyState
-            title="Experience details are pending"
-            description="I’m keeping the professional history precise and only publishing confirmed details."
-            action={{ label: "Contact me", href: "/contact" }}
-          />
-        )}
-      </Section>
+        </Section>
+      ) : null}
 
-      <Section id="process" eyebrow="Process" title="How a project runs" description="A low-friction, collaborative process from brief to launch.">
-        {processSteps.length > 0 ? (
+      {processSteps.length > 0 ? (
+        <Section id="process" eyebrow="Process" title="How a project runs" description="A low-friction, collaborative process from brief to launch.">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             {processSteps.map((step, index) => (
               <div key={step.title} className="rounded-md border border-border bg-surface p-5">
@@ -169,17 +195,11 @@ export default function Home() {
               </div>
             ))}
           </div>
-        ) : (
-          <EmptyState
-            title="Process details are pending"
-            description="The working process is kept intentionally simple until the owner confirms the final wording."
-            action={{ label: "Discuss your project", href: "/contact" }}
-          />
-        )}
-      </Section>
+        </Section>
+      ) : null}
 
-      <Section id="testimonials" eyebrow="Feedback" title="What clients say" description="Client feedback is hidden until genuine testimonials are available.">
-        {testimonials.length > 0 ? (
+      {testimonials.length > 0 ? (
+        <Section id="testimonials" eyebrow="Feedback" title="What clients say" description="Client feedback is only shown when genuine, permitted testimonials exist.">
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {testimonials.map((testimonial) => (
               <blockquote key={`${testimonial.author}-${testimonial.quote}`} className="rounded-md border border-border bg-surface p-6">
@@ -191,14 +211,8 @@ export default function Home() {
               </blockquote>
             ))}
           </div>
-        ) : (
-          <EmptyState
-            title="No testimonials yet"
-            description="I only publish client feedback when there is explicit permission to do so."
-            action={{ label: "Get in touch", href: "/contact" }}
-          />
-        )}
-      </Section>
+        </Section>
+      ) : null}
 
       <Section id="contact" eyebrow="Contact" title="Tell me about your project" description="Share a few details and I’ll get back to you.">
         <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
@@ -214,28 +228,22 @@ export default function Home() {
                     href={link.url ?? "#"}
                     target={link.url?.startsWith("http") ? "_blank" : undefined}
                     rel={link.url?.startsWith("http") ? "noopener noreferrer" : undefined}
+                    aria-label={`${link.label} (opens in a new tab)`}
                     className="block rounded-md border border-border bg-background px-4 py-3 text-foreground hover:border-accent"
                   >
                     {link.label}
                   </a>
                 ))
               ) : (
-                <p className="text-muted-foreground">Contact details are pending confirmation.</p>
+                <p className="text-muted-foreground">No contact channels are configured yet.</p>
               )}
             </div>
           </div>
 
-          <div className="rounded-md border border-border bg-surface p-6">
-            <p className="text-small uppercase tracking-[0.12em] text-accent">Response</p>
-            <p className="mt-4 text-body-lg text-muted-foreground">
-              I usually reply to enquiries with a short conversation about scope, goals, and the next step.
-            </p>
-            <div className="mt-6">
-              <ButtonLink href="/contact" className="w-full justify-center">
-                Let&apos;s Work Together
-              </ButtonLink>
-            </div>
-          </div>
+          <ContactForm
+            services={activeServices}
+            enabled={isContactSubmissionEnabled()}
+          />
         </div>
       </Section>
     </main>

@@ -81,6 +81,7 @@ Retention (DRAFT, confirm with OQ-22): keep enquiries only as long as needed to 
 | Disallowed origin / bad content-type / too large | 400 | `{ "ok": false, "code": "BAD_REQUEST" }` | |
 | Rate limited | 429 | `{ "ok": false, "code": "RATE_LIMITED" }` | Optional `Retry-After` |
 | Database or unexpected error | 500 | `{ "ok": false, "code": "SERVER_ERROR" }` | No details leaked |
+| Integrations not configured or submissions not enabled | 503 | `{ "ok": false, "code": "SERVICE_UNAVAILABLE" }` | UI does not collect enquiry data until approved setup is complete |
 
 Other methods → 405. Responses use `Cache-Control: no-store`.
 

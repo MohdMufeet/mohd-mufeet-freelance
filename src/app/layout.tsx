@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { JsonLd } from "@/components/shared/JsonLd";
 import { getSiteConfig } from "@/lib/content";
 import "./globals.css";
 
@@ -25,10 +26,34 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  metadataBase: siteConfig.url ? new URL(siteConfig.url) : undefined,
+  metadataBase: siteConfig.url ? new URL(siteConfig.url) : new URL("http://localhost:3000"),
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    locale: "en_IN",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const websiteJsonLd = siteConfig.url
+    ? {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: siteConfig.name,
+        url: siteConfig.url,
+      }
+    : null;
+
   return (
     <html
       lang="en"
@@ -42,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <div id="top" className="flex min-h-screen flex-col">
+          {websiteJsonLd ? <JsonLd data={websiteJsonLd} /> : null}
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />

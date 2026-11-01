@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Section } from "@/components/shared/Section";
-import { TechChip } from "@/components/shared/TechChip";
 import { getPublishedProjects } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = createPageMetadata({
+  path: "/projects",
+  title: "Projects",
+  description:
+    "Selected web development projects by Mohd Mufeet, with a clear description of the role in each.",
+});
 
 export default function ProjectsPage() {
   const projects = getPublishedProjects();
@@ -12,25 +21,7 @@ export default function ProjectsPage() {
         {projects.length > 0 ? (
           <div className="grid gap-6 lg:grid-cols-2">
             {projects.map((project) => (
-              <article key={project.slug} className="overflow-hidden rounded-md border border-border bg-surface">
-                <div className="border-b border-border bg-surface-raised p-6">
-                  <p className="text-label uppercase tracking-[0.12em] text-accent">{project.featured ? "Featured" : "Project"}</p>
-                  <h3 className="mt-3 text-h3 font-semibold text-foreground">{project.title}</h3>
-                  {project.summary ? <p className="mt-3 text-muted-foreground">{project.summary}</p> : null}
-                </div>
-                <div className="space-y-5 p-6">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((technology) => (
-                      <TechChip key={`${project.slug}-${technology}`} label={technology} />
-                    ))}
-                  </div>
-                  {project.liveUrl ? (
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex text-small font-medium text-foreground underline-offset-4 hover:underline">
-                      View live project
-                    </a>
-                  ) : null}
-                </div>
-              </article>
+              <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
         ) : (

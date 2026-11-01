@@ -170,6 +170,41 @@ a {
   line-height: 1.25;
 }
 
+.form-field {
+  @apply min-h-11 w-full rounded-md border border-border bg-background px-3 py-3 text-foreground;
+}
+
+.form-field[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
+.form-field:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.form-error {
+  @apply mt-2 text-small text-destructive;
+}
+
+.service-card,
+.project-card {
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.service-card:hover,
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.service-card:focus-within,
+.project-card:focus-within {
+  border-color: var(--ring);
+}
+
 .status-message {
   @apply rounded-md border border-border bg-surface px-4 py-3 text-foreground;
 }

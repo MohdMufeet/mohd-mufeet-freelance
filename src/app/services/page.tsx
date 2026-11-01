@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { Section } from "@/components/shared/Section";
 import { getServices } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = createPageMetadata({
+  path: "/services",
+  title: "Services",
+  description:
+    "Web development services: full stack development, Next.js, business websites, e-commerce, backend APIs, and database integration.",
+});
 
 export default function ServicesPage() {
   const services = getServices();
